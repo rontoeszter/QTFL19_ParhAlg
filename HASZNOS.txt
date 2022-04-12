@@ -1,2 +1,5 @@
 Példák: 
 https://gobyexample.com/
+
+HELP:
+https://docs.oracle.com/cd/E26502_01/html/E35303/tlib-1.html#tlib-79569
