@@ -9,3 +9,4 @@ https://docs.oracle.com/cd/E26502_01/html/E35303/tlib-1.html#tlib-79569
 http://www.mathcs.emory.edu/~cheung/Courses/355/Syllabus/91-pthreads/sync3.html
 https://github.com/HPC-Sect/ZeroSample/tree/master/pthreads/Numerical
 http://www.csc.villanova.edu/~mdamian/threads/posixthreads.html
+https://dtk.tankonyvtar.hu/xmlui/bitstream/handle/123456789/12109/2011-0063_22_bevezetes_mpi_programozasba.pdf?sequence=2&isAllowed=y
