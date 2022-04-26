@@ -1,33 +1,42 @@
-#include <stdio.h>       /* standard I/O routines                 */
-#include <pthread.h>     /* pthread functions and data structures */
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-/* function to be executed by the new thread */
-void* PrintHello(void* data)
+#define MAX_THREADS 50
+
+pthread_t thread_id[MAX_THREADS];    
+
+void * PrintHello(void * data)
 {
-    int my_data = (int)data;     	/* data received by thread */
-
-    pthread_detach(pthread_self());
-    printf("Hello from new thread - got %d\n", my_data);
-    pthread_exit(NULL);			/* terminate the thread */
+    printf("Hello from thread %u - I was created in iteration %d !\n", (int)pthread_self(), (int)data);
+    pthread_exit(NULL);
 }
 
-/* like any C program, program's execution begins in main */
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
-    int        rc;         	/* return value                           */
-    pthread_t  thread_id;     	/* thread's ID (just an integer)          */
-    int        t         = 11;  /* data passed to the new thread          */
+    int rc, i, n;
 
-    /* create a new thread that will execute 'PrintHello' */
-    rc = pthread_create(&thread_id, NULL, PrintHello, (void*)t);  
-    if(rc)			/* could not create thread */
+    if(argc < 2) 
     {
-        printf("\n ERROR: return code from pthread_create is %d \n", rc);
-        exit(1);
+        printf("Please add the number of threads to the command line\n");
+        exit(1); 
     }
-    printf("\n Created new thread (%u) ... \n", thread_id);
-    
-    pthread_exit(NULL);		/* terminate the thread */
-}
+    n = atoi(argv[1]);
+    if(n > MAX_THREADS) n = MAX_THREADS;
 
-//gcc feleves.c -o feleves -lpthread
+    for(i = 0; i < n; i++)
+    {
+        rc = pthread_create(&thread_id[i], NULL, PrintHello, (void*)i);
+        if(rc)
+        {
+             printf("\n ERROR: return code from pthread_create is %d \n", rc);
+             exit(1);
+        }
+        printf("\n I am thread %u. Created new thread (%u) in iteration %d ...\n", 
+                (int)pthread_self(), (int)thread_id[i], i);
+        if(i % 5 == 0) sleep(1);
+    }
+
+    pthread_exit(NULL);
+}
