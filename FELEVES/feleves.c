@@ -29,3 +29,5 @@ int main(int argc, char* argv[])
     
     pthread_exit(NULL);		/* terminate the thread */
 }
+
+//gcc feleves.c -o feleves -lpthread
